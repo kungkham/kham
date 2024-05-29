@@ -1,0 +1,24 @@
+<?php
+include 'db.php';
+if (isset($_POST['update'])) {
+    $id_to_update = $_POST['id']; // Get the ID of the row to update
+    $new_name = $_POST['username']; // Get the new name value
+    
+
+    // Step 3: Execute UPDATE query
+    $sql = "UPDATE users SET username='$username' WHERE id = $id_to_update"; // Change 'your_table' to your actual table name
+    if ($conn->query($sql) === TRUE) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . $conn->error;
+    }
+}
+
+// Step 4: Retrieve data from MySQL table
+$id_to_update = $_POST['id']; // Get the ID of the row to update
+$sql = "SELECT * FROM your_table WHERE id = $id_to_update"; // Change 'your_table' to your actual table name
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+
+// Step 5: Display the update form
+?>

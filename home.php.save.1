@@ -1,0 +1,63 @@
+<?php
+include 'db.php';
+
+        if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
+    $id = $_GET['id'];
+
+    // SQL query to delete the record
+    $sql = "DELETE FROM users WHERE id=$id";
+    if ($conn->query($sql) === TRUE) {
+        echo "Record deleted successfully";
+    } else {
+        echo "Error deleting record: " . $conn->error;
+    }
+}
+
+        $sql = "SELECT id, username FROM users";
+        $result = $conn->query($sql)
+
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Welcome, <?php echo $_SESSION['username']; ?></h1>
+   
+
+    <h2>Data from Database</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <!-- Add more headers if needed -->
+        </tr>
+
+       <?php
+        // Check if there are any rows returned
+        if ($result->num_rows > 0) {
+            // Output data of each row
+            while($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . $row["id"] . "</td>";
+                echo "<td>" . $row["username"] . "</td>";
+               
+                echo "<td><a href='update.php' id=" . $row["id"] . "'>Edit</a> | <a href='?action=delete&id=" . $row["id"] . "' onclick='return confirm(\"Are you sure?>
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='4'>No users found</td></tr>";
+        }
+        ?>
+    </table>
+<button><a href="login.php">Logout</a></button>
+</body>
+</html>
+ 
